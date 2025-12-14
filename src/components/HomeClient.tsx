@@ -11,7 +11,7 @@ import { LeaderboardModal } from "./LeaderboardModal";
 import SuccessModal from "./SuccessModal";
 import { FavoriteReminder } from "./FavoriteReminder";
 import { THEMES, CHAIN_IDS } from "../config/theme";
-import { BaseWallet } from "./BaseWallet";
+import BaseWallet from "./BaseWallet";
 
 // --- 1. ROBUST THEME MAP (Global Visuals) ---
 const themeMap: Record<string, { primary: string; glow: string; border: string; text: string; bgGradient: string }> = {
@@ -280,10 +280,11 @@ export default function HomeClient() {
       {/* 1. HEADER */}
       <header className="relative z-50 flex items-center justify-between px-4 py-3 bg-slate-900/50 backdrop-blur-md sticky top-0 border-b border-white/5">
         <div className="flex items-center gap-2.5">
-          <BaseWallet />
+          {/* Left side empty or logo */}
         </div>
 
         <div className="flex flex-col gap-1.5 items-end">
+          <BaseWallet />
           <div className="flex gap-1.5">
              <button onClick={() => marketRef.current?.scrollIntoView({ behavior: 'smooth' })} className={`bg-amber-600 hover:bg-amber-500 text-white text-[10px] font-bold py-1 px-3 rounded-md border border-amber-500 flex items-center gap-1.5 transition-all ${isEmpty ? 'animate-pulse' : ''}`}>
                <span>🛒</span> Market

@@ -1,3 +1,4 @@
+'use client';
 
 import {
   ConnectWallet,
@@ -5,41 +6,36 @@ import {
   WalletDropdown,
   WalletDropdownDisconnect,
   WalletDropdownLink,
-  WalletDropdownBasename,
-  WalletDropdownFundLink
 } from '@coinbase/onchainkit/wallet';
 import {
   Address,
   Avatar,
   Name,
   Identity,
-  EthBalance,
+  EthBalance
 } from '@coinbase/onchainkit/identity';
 
-export function BaseWallet() {
+export default function BaseWallet() {
   return (
-    <Wallet>
-      <ConnectWallet>
-        <Avatar className="h-6 w-6" />
-        <Name />
-      </ConnectWallet>
-      <WalletDropdown>
-        <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-          <Avatar />
+    <div className="flex justify-end">
+      <Wallet>
+        <ConnectWallet>
+          <Avatar className="h-6 w-6" />
           <Name />
-          <Address />
-          <EthBalance />
-        </Identity>
-        <WalletDropdownBasename />
-        <WalletDropdownLink
-          icon="wallet"
-          href="https://keys.coinbase.com"
-        >
-          Wallet
-        </WalletDropdownLink>
-        <WalletDropdownFundLink />
-        <WalletDropdownDisconnect />
-      </WalletDropdown>
-    </Wallet>
+        </ConnectWallet>
+        <WalletDropdown>
+          <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
+            <Avatar />
+            <Name />
+            <Address />
+            <EthBalance />
+          </Identity>
+          <WalletDropdownLink icon="wallet" href="https://keys.coinbase.com">
+            Wallet
+          </WalletDropdownLink>
+          <WalletDropdownDisconnect />
+        </WalletDropdown>
+      </Wallet>
+    </div>
   );
 }
