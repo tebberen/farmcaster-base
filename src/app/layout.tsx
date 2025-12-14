@@ -28,6 +28,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   other: {
+    "base:app_id": "693df866d77c069a945bde9a",
     "fc:frame": JSON.stringify({
       version: "next",
       imageUrl: "https://farmcaster-six.vercel.app/images/cover.png",
