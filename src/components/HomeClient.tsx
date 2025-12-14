@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import sdk from "@farcaster/miniapp-sdk";
 import { useAccount, useReadContract, useWriteContract, useSwitchChain, useConnect, useDisconnect } from "wagmi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -95,6 +95,8 @@ export default function HomeClient() {
   const [successData, setSuccessData] = useState<{ seedId: number, xp: number, hash: string } | null>(null);
   const [farcasterUser, setFarcasterUser] = useState<any>(null);
 
+  const marketRef = useRef<HTMLElement>(null);
+
   // Derive Current Theme (Config + Visuals)
   const currentTheme = React.useMemo(() => {
     let themeConfig = THEMES.base;
@@ -163,6 +165,16 @@ export default function HomeClient() {
     });
     return Object.fromEntries(Object.entries(map).map(([k,v]) => [k, getEmojiById(v)?.icon || '']));
   }, [historyData]);
+
+  // Derived empty state:
+  // 1. Not connected (treat as empty/new user) -> Show CTA
+  // 2. Connected AND History loaded AND History empty -> Show CTA
+  // 3. Connected AND History loading -> Don't show (wait)
+  const isEmpty = React.useMemo(() => {
+     if (!isConnected) return true;
+     if (!historyData) return false; // Loading
+     return (historyData as any[]).length === 0;
+  }, [isConnected, historyData]);
 
   // --- CALENDAR LOGIC ---
   const getDaysInMonth = (date: Date) => {
@@ -279,13 +291,20 @@ export default function HomeClient() {
         </div>
 
         <div className="flex flex-col gap-1.5 items-end">
-          <button onClick={() => setIsLeaderboardOpen(true)} className="bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-bold py-1 px-3 rounded-md border border-slate-600 flex items-center gap-1.5 transition-all">
-            <span>🏆</span> Leaderboard
-          </button>
+          <div className="flex gap-1.5">
+             <button onClick={() => marketRef.current?.scrollIntoView({ behavior: 'smooth' })} className={`bg-amber-600 hover:bg-amber-500 text-white text-[10px] font-bold py-1 px-3 rounded-md border border-amber-500 flex items-center gap-1.5 transition-all ${isEmpty ? 'animate-pulse' : ''}`}>
+               <span>🛒</span> Market
+             </button>
+             <button onClick={() => setIsLeaderboardOpen(true)} className="bg-slate-800 hover:bg-slate-700 text-white text-[10px] font-bold py-1 px-3 rounded-md border border-slate-600 flex items-center gap-1.5 transition-all">
+               <span>🏆</span> Leaderboard
+             </button>
+          </div>
 
-          <button onClick={() => handlePlant(0)} className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold py-1 px-3 rounded-md shadow-md shadow-blue-500/20 flex items-center gap-1.5 transition-all">
-            <span>💧</span> WATER FARM
-          </button>
+          <div className="flex items-center gap-1.5">
+             <button onClick={() => handlePlant(0)} className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold py-1 px-3 rounded-md shadow-md shadow-blue-500/20 flex items-center gap-1.5 transition-all">
+               <span>💧</span> WATER FARM
+             </button>
+          </div>
         </div>
       </header>
 
@@ -325,26 +344,39 @@ export default function HomeClient() {
              {['S','M','T','W','T','F','S'].map(d => <div key={d}>{d}</div>)}
            </div>
 
-           <div className="grid grid-cols-7 gap-2">
-              {[...Array(startDay)].map((_, i) => <div key={`empty-${i}`} />)}
-              {[...Array(days)].map((_, i) => {
-                 const dayNum = i + 1;
-                 const currentDateStr = `${year}-${String(viewDate.getMonth()+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
-                 const emoji = historyMap[currentDateStr];
-                 const isToday = new Date().toDateString() === new Date(year, viewDate.getMonth(), dayNum).toDateString();
+           <div className="relative">
+             {isEmpty && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-sm rounded-xl text-center p-4">
+                  <p className="text-white text-xl font-bold mb-4 drop-shadow-md">Your garden is empty! 🌱</p>
+                  <button
+                    onClick={() => marketRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                    className={`px-6 py-3 rounded-full font-bold text-white shadow-lg ${currentTheme.primary} border-2 border-white/20 hover:scale-105 hover:brightness-110 transition-all`}
+                  >
+                    Get Your First Seed
+                  </button>
+                </div>
+             )}
+             <div className="grid grid-cols-7 gap-2">
+                {[...Array(startDay)].map((_, i) => <div key={`empty-${i}`} />)}
+                {[...Array(days)].map((_, i) => {
+                   const dayNum = i + 1;
+                   const currentDateStr = `${year}-${String(viewDate.getMonth()+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+                   const emoji = historyMap[currentDateStr];
+                   const isToday = new Date().toDateString() === new Date(year, viewDate.getMonth(), dayNum).toDateString();
 
-                 return (
-                   <div key={dayNum} className={`relative aspect-square rounded-xl border flex items-center justify-center transition-all ${emoji ? currentTheme.activeBox : (isToday ? `${currentTheme.primary} text-white border-transparent` : 'bg-black/20 border-transparent')}`}>
-                      <span className={`absolute top-0.5 right-1 text-[9px] font-bold ${isToday ? 'text-white' : currentTheme.strongText}`}>{dayNum}</span>
-                      {emoji && <span className="text-xl">{emoji}</span>}
-                   </div>
-                 )
-              })}
+                   return (
+                     <div key={dayNum} className={`relative aspect-square rounded-xl border flex items-center justify-center transition-all ${emoji ? currentTheme.activeBox : (isToday ? `${currentTheme.primary} text-white border-transparent` : 'bg-black/20 border-transparent')}`}>
+                        <span className={`absolute top-0.5 right-1 text-[9px] font-bold ${isToday ? 'text-white' : currentTheme.strongText}`}>{dayNum}</span>
+                        {emoji && <span className="text-xl">{emoji}</span>}
+                     </div>
+                   )
+                })}
+             </div>
            </div>
         </section>
 
         {/* 4. SEED MARKET */}
-        <section>
+        <section ref={marketRef}>
            <h3 className="font-bold text-lg mb-3 opacity-80">Seed Market</h3>
            <div className="grid grid-cols-2 gap-3 mb-6">
               {[
