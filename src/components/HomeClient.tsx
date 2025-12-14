@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import sdk from "@farcaster/frame-sdk";
+import sdk from "@farcaster/miniapp-sdk";
 import { useAccount, useReadContract, useWriteContract, useSwitchChain, useConnect, useDisconnect } from "wagmi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GARDEN_CONTRACTS, GARDEN_ABI } from "../config/contracts";
 import { SEED_DATA, getEmojiById } from "../config/emojis";
 import { OnboardingModal } from "./OnboardingModal";
 import { LeaderboardModal } from "./LeaderboardModal";
-import { SuccessModal } from "./SuccessModal";
+import SuccessModal from "./SuccessModal";
 import { FavoriteReminder } from "./FavoriteReminder";
 import { THEMES, CHAIN_IDS } from "../config/theme";
 
@@ -259,11 +259,9 @@ export default function HomeClient() {
       <SuccessModal
         isOpen={!!successData}
         onClose={() => setSuccessData(null)}
-        theme={currentTheme}
-        emoji={successData ? getEmojiById(successData.seedId).icon : null}
-        networkName={currentTheme.name}
-        chainId={CHAIN_IDS[currentTheme.id]}
-        xp={successData ? successData.xp : 0}
+        txHash={successData ? successData.hash : ''}
+        chainName={currentTheme.name}
+        xpEarned={successData ? successData.xp : 0}
       />
 
       {/* 1. HEADER */}
