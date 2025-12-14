@@ -1,5 +1,5 @@
 import React from 'react';
-import { Theme } from '../app/page';
+import { Theme } from '../config/theme';
 import clsx from 'clsx';
 import { X, Share2 } from 'lucide-react';
 
@@ -20,22 +20,28 @@ const CHAIN_IMAGES: Record<number, string> = {
     42161: 'arb-cover.png',
     143: 'monad-cover.png',
     999: 'hyper-cover.png',
+    1: 'eth-cover.png',
 };
 
 export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, theme, emoji, networkName, chainId, xp }) => {
     if (!isOpen) return null;
 
     const handleShare = () => {
-        const imageName = CHAIN_IMAGES[chainId] || 'base-cover.png';
-        const imageUrl = `https://tebberen.github.io/FarmCaster/images/${imageName}`;
-
         // Remove spaces for hashtag
         const networkHashtag = networkName.replace(/\s+/g, '');
 
         // Construct the text as requested
-        const text = `Just planted a ${emoji || '🌱'} in my onchain garden! 🚜\nNetwork: ${networkName}\nReward: +${xp} XP ✨\nCome plant your seeds with me! 👇\n\n#FarmCaster #${networkHashtag} @tebberen`;
+        const text = `Just planted a ${emoji || '🌱'} in my onchain garden! 🚜\nNetwork: ${networkName}\nReward: +${xp} XP ✨\nCome plant your seeds with me! 👇\n\n#FarmCaster #${networkHashtag} @farmmcaster`;
 
-        const shareUrl = "https://warpcast.com/~/compose?text=" + encodeURIComponent(text) + "&embeds[]=" + imageUrl;
+        // 2. THE FIX: Share the Vercel URL
+        // Why: This URL hosts the metadata/images. 'farcaster.xyz' does not.
+        const embedUrl = "https://farmcaster-six.vercel.app";
+
+        const encodedText = encodeURIComponent(text);
+        const encodedEmbed = encodeURIComponent(embedUrl);
+
+        // 2. Build the Compose URL
+        const shareUrl = `https://warpcast.com/~/compose?text=${encodedText}&embeds[]=${encodedEmbed}`;
         window.open(shareUrl, '_blank');
     };
 
@@ -55,7 +61,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, the
                         {emoji || "🌱"}
                     </div>
                     <h2 className="text-2xl font-bold text-white">Planted Successfully!</h2>
-                    <p className={clsx("font-bold text-lg", theme.strongText)}>Reward: +{xp} XP</p>
+                    <p className={clsx("font-bold text-lg", theme.strongText)}>You earned +{xp} XP!</p>
                 </div>
 
                 <button

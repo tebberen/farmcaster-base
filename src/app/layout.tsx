@@ -8,9 +8,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+// DEFINE METADATA FOR SOCIAL PREVIEWS
 export const metadata: Metadata = {
   title: "FarmCaster",
-  description: "A cross-chain farming game",
+  description: "The most vibrant onchain farming game. Plant seeds, earn XP, and climb the leaderboard.",
+  metadataBase: new URL("https://farmcaster-six.vercel.app"),
 };
 
 export default function RootLayout({

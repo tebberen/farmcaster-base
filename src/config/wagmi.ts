@@ -1,6 +1,7 @@
-import { http, createConfig } from "wagmi";
-import { base, mainnet, arbitrum, celo, bsc } from "wagmi/chains";
-import { farcasterMiniApp } from "@farcaster/miniapp-wagmi-connector";
+import { http, createConfig } from 'wagmi';
+import { base, celo, bsc, arbitrum, mainnet, optimism } from 'wagmi/chains';
+import { farcasterMiniApp } from '@farcaster/miniapp-wagmi-connector';
+import { injected, coinbaseWallet } from 'wagmi/connectors';
 import { defineChain } from "viem";
 
 export const monadMainnet = defineChain({
@@ -30,17 +31,21 @@ export const hyperEvmMainnet = defineChain({
 });
 
 export const config = createConfig({
-  chains: [mainnet, base, bsc, arbitrum, celo, monadMainnet, hyperEvmMainnet],
+  chains: [base, celo, bsc, arbitrum, mainnet, optimism, monadMainnet, hyperEvmMainnet],
   transports: {
-    [mainnet.id]: http(),
     [base.id]: http(),
+    [celo.id]: http(),
     [bsc.id]: http(),
     [arbitrum.id]: http(),
-    [celo.id]: http(),
+    [mainnet.id]: http(),
+    [optimism.id]: http(),
     [monadMainnet.id]: http(),
     [hyperEvmMainnet.id]: http(),
   },
   connectors: [
-    farcasterMiniApp(),
+    farcasterMiniApp(), // PRIORITY #1: Farcaster Wallet
+    injected(),         // PRIORITY #2: Browser Extension (Metamask)
+    coinbaseWallet({ appName: 'FarmCaster' }),
   ],
+  ssr: true,
 });

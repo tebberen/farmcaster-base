@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/FarmCaster",
-  output: "export",
-  images: { unoptimized: true },
   reactStrictMode: true,
-  webpack: (config) => {
-    config.externals.push("pino-pretty", "lokijs", "encoding");
-    config.resolve.alias = {
-        ...config.resolve.alias,
-        "@react-native-async-storage/async-storage": false,
-    };
-    config.resolve.fallback = { fs: false, net: false, tls: false };
-    return config;
+  // No basePath needed for Vercel
+  // No output: 'export' needed for Vercel (it handles build automatically)
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 };
+
 export default nextConfig;

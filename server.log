@@ -11,7 +11,7 @@ This information is used to shape Next.js' roadmap and prioritize features.
 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 https://nextjs.org/telemetry
 
- ✓ Ready in 2.3s
+ ✓ Ready in 1759ms
  ○ Compiling / ...
  ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
 Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/app/node_modules/@metamask/sdk/dist/browser/es'
@@ -21,7 +21,7 @@ Import trace for requested module:
 ./node_modules/@wagmi/connectors/dist/esm/metaMask.js
 ./node_modules/@wagmi/connectors/dist/esm/exports/index.js
 ./node_modules/wagmi/dist/esm/exports/connectors.js
-./node_modules/@rainbow-me/rainbowkit/dist/index.js
+./src/config/wagmi.ts
 ./src/app/providers.tsx
 
 ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
@@ -32,8 +32,25 @@ Import trace for requested module:
 ./node_modules/@wagmi/connectors/dist/esm/metaMask.js
 ./node_modules/@wagmi/connectors/dist/esm/exports/index.js
 ./node_modules/wagmi/dist/esm/exports/connectors.js
-./node_modules/@rainbow-me/rainbowkit/dist/index.js
-./src/app/page.tsx
+./src/config/wagmi.ts
+./src/app/providers.tsx
+
+./node_modules/pino/lib/tools.js
+Module not found: Can't resolve 'pino-pretty' in '/app/node_modules/pino/lib'
+
+Import trace for requested module:
+./node_modules/pino/lib/tools.js
+./node_modules/pino/pino.js
+./node_modules/@walletconnect/logger/dist/index.es.js
+./node_modules/@walletconnect/universal-provider/dist/index.es.js
+./node_modules/@walletconnect/ethereum-provider/dist/index.es.js
+./node_modules/@wagmi/connectors/dist/esm/walletConnect.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./src/config/wagmi.ts
+./src/app/providers.tsx
+@farcaster/frame-sdk is deprecated. Please use @farcaster/miniapp-sdk instead.
+ HEAD / 200 in 9676ms
  ⚠ ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
 Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/app/node_modules/@metamask/sdk/dist/browser/es'
 
@@ -42,8 +59,8 @@ Import trace for requested module:
 ./node_modules/@wagmi/connectors/dist/esm/metaMask.js
 ./node_modules/@wagmi/connectors/dist/esm/exports/index.js
 ./node_modules/wagmi/dist/esm/exports/connectors.js
-./node_modules/@rainbow-me/rainbowkit/dist/index.js
-./src/app/page.tsx
+./src/config/wagmi.ts
+./src/app/providers.tsx
 
 ./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js
 Module not found: Can't resolve '@react-native-async-storage/async-storage' in '/app/node_modules/@metamask/sdk/dist/browser/es'
@@ -53,6 +70,22 @@ Import trace for requested module:
 ./node_modules/@wagmi/connectors/dist/esm/metaMask.js
 ./node_modules/@wagmi/connectors/dist/esm/exports/index.js
 ./node_modules/wagmi/dist/esm/exports/connectors.js
-./node_modules/@rainbow-me/rainbowkit/dist/index.js
-./src/app/page.tsx
- GET / 200 in 131ms
+./src/config/wagmi.ts
+./src/app/providers.tsx
+
+./node_modules/pino/lib/tools.js
+Module not found: Can't resolve 'pino-pretty' in '/app/node_modules/pino/lib'
+
+Import trace for requested module:
+./node_modules/pino/lib/tools.js
+./node_modules/pino/pino.js
+./node_modules/@walletconnect/logger/dist/index.es.js
+./node_modules/@walletconnect/universal-provider/dist/index.es.js
+./node_modules/@walletconnect/ethereum-provider/dist/index.es.js
+./node_modules/@wagmi/connectors/dist/esm/walletConnect.js
+./node_modules/@wagmi/connectors/dist/esm/exports/index.js
+./node_modules/wagmi/dist/esm/exports/connectors.js
+./src/config/wagmi.ts
+./src/app/providers.tsx
+ GET / 200 in 97ms
+ GET / 200 in 58ms

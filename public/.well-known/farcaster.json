@@ -1,27 +1,29 @@
 {
   "accountAssociation": {
-    "header": "PASTE_YOUR_HEADER_HERE",
-    "payload": "PASTE_YOUR_PAYLOAD_HERE",
-    "signature": "PASTE_YOUR_SIGNATURE_HERE"
+    "header": "eyJmaWQiOjc2Mjg1OSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDkwQjI2NUVCMDhkM2NlNEQzNjQxNzdGQjNBZjcyQjhlODkwYzQyMzgifQ",
+    "payload": "eyJkb21haW4iOiJmYXJtY2FzdGVyLXNpeC52ZXJjZWwuYXBwIn0",
+    "signature": "hja2lYGnke8g2SgSwmOq4WZRTSbjI80eVEpbYAxwmG45ToULV1awNJwC1Iuvgfgfh4D8DA9xDpdklnkM0m+5BRw="
   },
   "miniapp": {
     "version": "1",
     "name": "FarmCaster",
-    "iconUrl": "https://tebberen.github.io/FarmCaster/images/icon.png",
-    "homeUrl": "https://tebberen.github.io/FarmCaster",
+    "iconUrl": "https://farmcaster-six.vercel.app/images/icon.png",
+    "homeUrl": "https://farmcaster-six.vercel.app",
     "description": "The most vibrant onchain farming game. Plant seeds, earn XP, and climb the leaderboard.",
-    "splashImageUrl": "https://tebberen.github.io/FarmCaster/images/splash.png",
+    "splashImageUrl": "https://farmcaster-six.vercel.app/images/icon.png",
     "splashBackgroundColor": "#0F172A",
     "primaryCategory": "games",
-    "tags": ["farming", "game", "social", "onchain"],
+    "tags": [
+      "farming",
+      "game",
+      "social",
+      "base"
+    ],
     "requiredChains": [
       "eip155:8453",
       "eip155:42220",
-      "eip155:56",
       "eip155:42161",
-      "eip155:1",
-      "eip155:143",
-      "eip155:999"
+      "eip155:1"
     ],
     "requiredCapabilities": [
       "wallet.getEthereumProvider",

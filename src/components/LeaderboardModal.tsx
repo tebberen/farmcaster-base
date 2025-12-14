@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useReadContract, useReadContracts, useAccount } from 'wagmi';
 import { HUB_CONTRACTS, HUB_ABI } from '../config/contracts';
-import { Theme } from '../app/page';
+import { Theme } from '../config/theme';
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 
