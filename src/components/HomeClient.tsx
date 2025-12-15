@@ -11,6 +11,18 @@ import SuccessModal from "./SuccessModal";
 import { FavoriteReminder } from "./FavoriteReminder";
 import { THEMES, CHAIN_IDS } from "../config/theme";
 import BaseWallet from "./BaseWallet";
+import { encodeFunctionData, Address } from "viem";
+import {
+  Transaction,
+  TransactionButton,
+  TransactionStatus,
+  TransactionStatusLabel,
+  TransactionStatusAction,
+  TransactionToast,
+  TransactionToastIcon,
+  TransactionToastLabel,
+  TransactionToastAction,
+} from '@coinbase/onchainkit/transaction';
 
 // --- 1. ROBUST THEME MAP (Global Visuals) ---
 const themeMap: Record<string, { primary: string; glow: string; border: string; text: string; bgGradient: string }> = {
@@ -80,10 +92,83 @@ const chainColors: Record<string, string> = {
 };
 const defaultColor = "from-gray-700 to-gray-800";
 
+function PlantButton({
+  seedId,
+  gardenAddress,
+  onSuccess,
+  buttonText,
+  className
+}: {
+  seedId: number,
+  gardenAddress: Address,
+  onSuccess: (hash: string, xp: number) => void,
+  buttonText: string,
+  className: string
+}) {
+  const getCalls = () => {
+    let func: 'gm' | 'deploy' | 'launch' | 'donate' = 'gm';
+    let val = 0n;
+    if (seedId >= 10 && seedId < 20) { func = 'deploy'; val = 30000000000000n; }
+    else if (seedId >= 20 && seedId < 30) { func = 'launch'; val = 45000000000000n; }
+    else if (seedId >= 30) { func = 'donate'; val = 60000000000000n; }
+
+    const data = encodeFunctionData({
+      abi: GARDEN_ABI,
+      functionName: func,
+      args: [seedId]
+    });
+
+    return [{
+      to: gardenAddress,
+      data,
+      value: val
+    }];
+  };
+
+  const handleStatus = (status: any) => {
+    if (status.statusName === 'success') {
+       let xp = 1;
+       if (seedId >= 10 && seedId < 20) xp = 2;
+       else if (seedId >= 20 && seedId < 30) xp = 3;
+       else if (seedId >= 30) xp = 5;
+
+       const receipt = status.statusData.transactionReceipts?.[0];
+       const hash = receipt?.transactionHash || '';
+       onSuccess(hash, xp);
+    }
+  };
+
+  return (
+    <Transaction
+      chainId={8453} // Base Mainnet
+      calls={getCalls()}
+      capabilities={{
+        paymasterService: {
+          url: process.env.NEXT_PUBLIC_PAYMASTER_URL || '',
+        },
+      }}
+      onStatus={handleStatus}
+    >
+      <TransactionButton
+        className={className}
+        text={buttonText}
+      />
+      <TransactionStatus>
+        <TransactionStatusLabel />
+        <TransactionStatusAction />
+      </TransactionStatus>
+      <TransactionToast>
+        <TransactionToastIcon />
+        <TransactionToastLabel />
+        <TransactionToastAction />
+      </TransactionToast>
+    </Transaction>
+  );
+}
+
 export default function HomeClient() {
   const { address, chain, isConnected } = useAccount();
   const { switchChain } = useSwitchChain();
-  const { writeContractAsync } = useWriteContract();
   const { connect, connectors } = useConnect();
 
   const [isMounted, setIsMounted] = useState(false);
@@ -123,7 +208,7 @@ export default function HomeClient() {
   };
 
   // --- DATA FETCHING (V4) ---
-  const gardenAddress = GARDEN_CONTRACTS[currentTheme.id] || GARDEN_CONTRACTS.base;
+  const gardenAddress = (GARDEN_CONTRACTS[currentTheme.id] || GARDEN_CONTRACTS.base) as Address;
   const { data: historyData } = useReadContract({
     address: gardenAddress,
     abi: GARDEN_ABI,
@@ -165,59 +250,8 @@ export default function HomeClient() {
 
   const { days, startDay, monthName, year } = getDaysInMonth(viewDate);
 
-  const handleConnect = () => {
-    const other = connectors.find(c => c.id !== 'farcaster');
-    if (other) connect({ connector: other });
-  };
-
-  const handlePlant = async (id: number) => {
-    if (!isConnected) {
-      handleConnect();
-      return;
-    }
-    const targetChainId = CHAIN_IDS[currentTheme.id];
-    if (chain && chain.id !== targetChainId) {
-        try {
-            switchChain({ chainId: targetChainId });
-        } catch (e) {
-            console.error("Switch chain failed", e);
-        }
-        return;
-    }
-
-    let func: 'gm' | 'deploy' | 'launch' | 'donate' = 'gm';
-    let val = 0n;
-    if (id >= 10 && id < 20) { func = 'deploy'; val = 30000000000000n; }
-    else if (id >= 20 && id < 30) { func = 'launch'; val = 45000000000000n; }
-    else if (id >= 30) { func = 'donate'; val = 60000000000000n; }
-
-    let xp = 1;
-    if (id >= 10 && id < 20) xp = 2;
-    else if (id >= 20 && id < 30) xp = 3;
-    else if (id >= 30) xp = 5;
-
-    try {
-      let hash;
-      if (func === 'gm') {
-        hash = await writeContractAsync({
-          address: gardenAddress,
-          abi: GARDEN_ABI,
-          functionName: 'gm',
-          args: [id]
-        });
-      } else {
-        hash = await writeContractAsync({
-          address: gardenAddress,
-          abi: GARDEN_ABI,
-          functionName: func,
-          args: [id],
-          value: val
-        });
-      }
-      setSuccessData({ seedId: id, xp, hash: hash || '' });
-    } catch (e) {
-      console.error("Planting failed:", e);
-    }
+  const handlePlantSuccess = (hash: string, xp: number, seedId: number) => {
+    setSuccessData({ seedId, xp, hash });
   };
 
   if (!isMounted) return null;
@@ -262,9 +296,13 @@ export default function HomeClient() {
           </div>
 
           <div className="flex items-center gap-1.5">
-             <button onClick={() => handlePlant(0)} className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold py-1 px-3 rounded-md shadow-md shadow-blue-500/20 flex items-center gap-1.5 transition-all">
-               <span>💧</span> WATER FARM
-             </button>
+             <PlantButton
+                seedId={0}
+                gardenAddress={gardenAddress}
+                onSuccess={(hash, xp) => handlePlantSuccess(hash, xp, 0)}
+                buttonText="💧 WATER FARM"
+                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold py-1 px-3 rounded-md shadow-md shadow-blue-500/20 flex items-center gap-1.5 transition-all"
+             />
           </div>
         </div>
       </header>
@@ -370,13 +408,14 @@ export default function HomeClient() {
 
            <div className={`grid grid-cols-4 sm:grid-cols-5 gap-3 p-4 rounded-3xl ${currentTheme.cardBg} border ${currentTheme.border}`}>
               {SEED_DATA[activeTab].map((seed) => (
-                <button
-                  key={seed.id}
-                  onClick={() => handlePlant(seed.id)}
-                  className="aspect-square bg-white/10 rounded-xl shadow-sm flex items-center justify-center text-3xl hover:scale-110 active:scale-90 transition-transform cursor-pointer hover:bg-white/20"
-                >
-                  {seed.icon}
-                </button>
+                <PlantButton
+                   key={seed.id}
+                   seedId={seed.id}
+                   gardenAddress={gardenAddress}
+                   onSuccess={(hash, xp) => handlePlantSuccess(hash, xp, seed.id)}
+                   buttonText={seed.icon}
+                   className="aspect-square bg-white/10 rounded-xl shadow-sm flex items-center justify-center text-3xl hover:scale-110 active:scale-90 transition-transform cursor-pointer hover:bg-white/20 w-full h-full"
+                />
               ))}
            </div>
         </section>
