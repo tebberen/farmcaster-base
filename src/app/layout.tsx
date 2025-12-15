@@ -36,6 +36,20 @@ export const metadata: Metadata = {
   },
   other: {
     'base:app_id': '693df866d77c069a945bde9a',
+    'fc:miniapp': JSON.stringify({
+      version: 'next',
+      imageUrl: 'https://farmcaster-six.vercel.app/images/cover.png',
+      button: {
+        title: 'Launch FarmCaster',
+        action: {
+          type: 'launch_miniapp',
+          name: 'FarmCaster',
+          url: 'https://farmcaster-six.vercel.app',
+          splashImageUrl: 'https://farmcaster-six.vercel.app/images/icon.png',
+          splashBackgroundColor: '#0f172a',
+        },
+      },
+    }),
     "fc:frame": JSON.stringify({
       version: "next",
       imageUrl: "https://farmcaster-six.vercel.app/images/cover.png",
