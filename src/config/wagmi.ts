@@ -1,6 +1,5 @@
 import { http, createConfig } from 'wagmi';
 import { base, celo, bsc, arbitrum, mainnet, optimism } from 'wagmi/chains';
-import { farcasterMiniApp } from '@farcaster/miniapp-wagmi-connector';
 import { injected, coinbaseWallet } from 'wagmi/connectors';
 import { defineChain } from "viem";
 
@@ -43,8 +42,7 @@ export const config = createConfig({
     [hyperEvmMainnet.id]: http(),
   },
   connectors: [
-    farcasterMiniApp(), // PRIORITY #1: Farcaster Wallet
-    injected(),         // PRIORITY #2: Browser Extension (Metamask)
+    injected(),         // PRIORITY #1: Browser Extension (Metamask)
     coinbaseWallet({ appName: 'FarmCaster' }),
   ],
   ssr: true,

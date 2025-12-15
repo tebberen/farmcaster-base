@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
 import { THEMES } from "@/config/theme";
-import sdk from "@farcaster/miniapp-sdk";
 
 interface SuccessModalProps {
   isOpen: boolean;
@@ -52,11 +51,7 @@ export default function SuccessModal({
 
     // USE SDK ACTION FOR NATIVE HANDLING (Mobile Fix)
     // We check if sdk.actions exists to avoid errors, defaulting to window.open
-    if (sdk && sdk.actions) {
-        sdk.actions.openUrl(shareUrl);
-    } else {
-        window.open(shareUrl, "_blank");
-    }
+    window.open(shareUrl, "_blank");
   };
 
   const getExplorerUrl = (txHash: string) => {
