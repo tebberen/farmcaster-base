@@ -23,6 +23,7 @@ import {
   TransactionToastLabel,
   TransactionToastAction,
 } from '@coinbase/onchainkit/transaction';
+import { sdk } from '@farcaster/miniapp-sdk';
 
 // --- 1. ROBUST THEME MAP (Global Visuals) ---
 const themeMap: Record<string, { primary: string; glow: string; border: string; text: string; bgGradient: string }> = {
@@ -199,6 +200,15 @@ export default function HomeClient() {
     setIsMounted(true);
     const hasSeen = localStorage.getItem('farmcaster_onboarding_v1');
     if (!hasSeen) setShowOnboarding(true);
+
+    const initSdk = async () => {
+      try {
+        await sdk.actions.ready();
+      } catch (error) {
+        console.error("Failed to initialize Farcaster SDK:", error);
+      }
+    };
+    initSdk();
   }, []);
 
 
