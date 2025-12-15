@@ -1,33 +1,21 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjc2Mjg1OSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDkwQjI2NUVCMDhkM2NlNEQzNjQxNzdGQjNBZjcyQjhlODkwYzQyMzgifQ",
-    "payload": "eyJkb21haW4iOiJmYXJtY2FzdGVyLXNpeC52ZXJjZWwuYXBwIn0",
-    "signature": "MHg4NjM2YjY5NTgxYTc5MWVmMjBkOTI4MTJjMjYzYWFlMTY2NTE0ZDI2ZTMyM2NkMWU1NDRhNWI2MDBjNzA5ODZlMzk0ZTg1MGI1NzU2YjAzNDljMDJkNDhiYWY4MWY4MWY4NzgwZmMwYzBmNzEwZTk3NjQ5Njc5MGNkMjZmYjkwNTFj"
+    "header": "eyJmaWQiOiA4ODg4ODgsICJ0eXBlIjogImN1c3RvZHkiLCAia2V5IjogIjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCJ9",
+    "payload": "eyJkb21haW4iOiAiZmFybWNhc3Rlci1iYXNlLnZlcmNlbC5hcHAifQ",
+    "signature": "MHhhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhMWI"
   },
-  "miniapp": {
+  "frame": {
     "version": "1",
-    "name": "FarmCaster",
-    "iconUrl": "https://farmcaster-six.vercel.app/images/icon.png",
-    "homeUrl": "https://farmcaster-six.vercel.app",
-    "description": "The most vibrant onchain farming game. Plant seeds, earn XP, and climb the leaderboard.",
-    "splashImageUrl": "https://farmcaster-six.vercel.app/images/icon.png",
-    "splashBackgroundColor": "#0F172A",
-    "primaryCategory": "games",
-    "tags": [
-      "farming",
-      "game",
-      "social",
-      "base"
-    ],
-    "requiredChains": [
-      "eip155:8453",
-      "eip155:42220",
-      "eip155:42161",
-      "eip155:1"
-    ],
-    "requiredCapabilities": [
-      "wallet.getEthereumProvider",
-      "actions.signIn"
-    ]
-  }
+    "name": "FarmCaster Base",
+    "iconUrl": "https://farmcaster-base.vercel.app/icon-512.png",
+    "homeUrl": "https://farmcaster-base.vercel.app",
+    "imageUrl": "https://farmcaster-base.vercel.app/opengraph-image.png",
+    "buttonTitle": "Play FarmCaster",
+    "splashImageUrl": "https://farmcaster-base.vercel.app/splash.png",
+    "splashBackgroundColor": "#0052ff",
+    "webhookUrl": "https://farmcaster-base.vercel.app/api/webhook"
+  },
+  "triggers": [
+    { "type": "channel", "channelId": "base" }
+  ]
 }
