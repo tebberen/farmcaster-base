@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import sdk from "@farcaster/miniapp-sdk";
 import { useAccount, useReadContract, useWriteContract, useSwitchChain, useConnect, useDisconnect } from "wagmi";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GARDEN_CONTRACTS, GARDEN_ABI } from "../config/contracts";
@@ -94,7 +93,6 @@ export default function HomeClient() {
   const [showFavoriteReminder, setShowFavoriteReminder] = useState(false);
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
   const [successData, setSuccessData] = useState<{ seedId: number, xp: number, hash: string } | null>(null);
-  const [farcasterUser, setFarcasterUser] = useState<any>(null);
 
   const marketRef = useRef<HTMLElement>(null);
 
@@ -118,27 +116,6 @@ export default function HomeClient() {
     if (!hasSeen) setShowOnboarding(true);
   }, []);
 
-  // 2. SDK Initialization & Auto-Connect
-  useEffect(() => {
-    const init = async () => {
-      sdk.actions.ready();
-      try {
-        const context = await sdk.context;
-        if (context?.user) {
-          setFarcasterUser(context.user);
-        }
-        if (!isConnected && context?.client) {
-          const connector = connectors.find((c) => c.id === 'farcaster');
-          if (connector) {
-            connect({ connector });
-          }
-        }
-      } catch (error) {
-        console.error("SDK Error:", error);
-      }
-    };
-    init();
-  }, [isConnected, connectors, connect]);
 
   const handleCloseOnboarding = () => {
       setShowOnboarding(false);
@@ -189,13 +166,6 @@ export default function HomeClient() {
   const { days, startDay, monthName, year } = getDaysInMonth(viewDate);
 
   const handleConnect = () => {
-    if (farcasterUser) {
-        const fc = connectors.find(c => c.id === 'farcaster');
-        if (fc) {
-            connect({ connector: fc });
-            return;
-        }
-    }
     const other = connectors.find(c => c.id !== 'farcaster');
     if (other) connect({ connector: other });
   };
@@ -249,9 +219,6 @@ export default function HomeClient() {
       console.error("Planting failed:", e);
     }
   };
-
-  const profileImage = farcasterUser?.pfpUrl ?? "/images/icon.png";
-  const profileHandle = farcasterUser?.username ? `@${farcasterUser.username}` : (address ? `${address.slice(0, 6)}...` : "Connect");
 
   if (!isMounted) return null;
 

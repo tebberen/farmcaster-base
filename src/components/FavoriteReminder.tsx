@@ -1,5 +1,4 @@
 import React from 'react';
-import sdk from "@farcaster/miniapp-sdk";
 import { Star, X } from "lucide-react";
 
 interface FavoriteReminderProps {
@@ -11,11 +10,8 @@ export function FavoriteReminder({ isOpen, onClose }: FavoriteReminderProps) {
   if (!isOpen) return null;
 
   const handleAdd = async () => {
-    try {
-        await sdk.actions.addMiniApp();
-    } catch (e) {
-        console.error("Failed to add mini app:", e);
-    }
+    // Farcaster SDK removed
+    console.log("Add to favorites clicked");
   };
 
   return (
