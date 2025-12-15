@@ -11,61 +11,18 @@ const inter = Inter({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1, // Prevents zooming issues on inputs (Guidelines violation)
+  maximumScale: 1,
+  userScalable: false,
   themeColor: '#0052ff',
 }
 
 export const metadata: Metadata = {
-  title: "FarmCaster",
-  description: "Plant seeds, harvest rewards on chain! 🚜",
-  openGraph: {
-    title: "FarmCaster",
-    description: "Plant seeds, harvest rewards on chain! 🚜",
-    url: "https://farmcaster-six.vercel.app",
-    siteName: "FarmCaster",
-    images: [
-      {
-        url: "https://farmcaster-six.vercel.app/images/cover.png", // MUST be absolute
-        width: 1200,
-        height: 630,
-        alt: "FarmCaster Preview",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
+  title: 'FarmCaster Base',
+  description: 'Gasless farming game on Base',
   other: {
     'base:app_id': '693df866d77c069a945bde9a',
-    'fc:miniapp': JSON.stringify({
-      version: 'next',
-      imageUrl: 'https://farmcaster-six.vercel.app/images/cover.png',
-      button: {
-        title: 'Launch FarmCaster',
-        action: {
-          type: 'launch_miniapp',
-          name: 'FarmCaster',
-          url: 'https://farmcaster-six.vercel.app',
-          splashImageUrl: 'https://farmcaster-six.vercel.app/images/icon.png',
-          splashBackgroundColor: '#0f172a',
-        },
-      },
-    }),
-    "fc:frame": JSON.stringify({
-      version: "next",
-      imageUrl: "https://farmcaster-six.vercel.app/images/cover.png",
-      button: {
-        title: "Open FarmCaster",
-        action: {
-          type: "launch_frame",
-          name: "FarmCaster",
-          url: "https://farmcaster-six.vercel.app",
-          splashImageUrl: "https://farmcaster-six.vercel.app/images/icon.png",
-          splashBackgroundColor: "#0f172a",
-        },
-      },
-    }),
   },
-};
+}
 
 export default function RootLayout({
   children,
