@@ -11,7 +11,8 @@ const inter = Inter({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1, // Prevents zooming issues on inputs (Guidelines violation)
+  maximumScale: 1,
+  userScalable: false,
   themeColor: '#0052ff',
 }
 
@@ -21,11 +22,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "FarmCaster",
     description: "Plant seeds, harvest rewards on chain! 🚜",
-    url: "https://farmcaster-six.vercel.app",
+    url: "https://farmcaster-base.vercel.app",
     siteName: "FarmCaster",
     images: [
       {
-        url: "https://farmcaster-six.vercel.app/images/cover.png", // MUST be absolute
+        url: "https://farmcaster-base.vercel.app/images/base-cover.png", // MUST be absolute
         width: 1200,
         height: 630,
         alt: "FarmCaster Preview",
@@ -38,28 +39,28 @@ export const metadata: Metadata = {
     'base:app_id': '693df866d77c069a945bde9a',
     'fc:miniapp': JSON.stringify({
       version: 'next',
-      imageUrl: 'https://farmcaster-six.vercel.app/images/cover.png',
+      imageUrl: 'https://farmcaster-base.vercel.app/images/base-cover.png',
       button: {
         title: 'Launch FarmCaster',
         action: {
           type: 'launch_miniapp',
           name: 'FarmCaster',
-          url: 'https://farmcaster-six.vercel.app',
-          splashImageUrl: 'https://farmcaster-six.vercel.app/images/icon.png',
+          url: 'https://farmcaster-base.vercel.app',
+          splashImageUrl: 'https://farmcaster-base.vercel.app/images/icon.png',
           splashBackgroundColor: '#0f172a',
         },
       },
     }),
     "fc:frame": JSON.stringify({
       version: "next",
-      imageUrl: "https://farmcaster-six.vercel.app/images/cover.png",
+      imageUrl: "https://farmcaster-base.vercel.app/images/base-cover.png",
       button: {
         title: "Open FarmCaster",
         action: {
           type: "launch_frame",
           name: "FarmCaster",
-          url: "https://farmcaster-six.vercel.app",
-          splashImageUrl: "https://farmcaster-six.vercel.app/images/icon.png",
+          url: "https://farmcaster-base.vercel.app",
+          splashImageUrl: "https://farmcaster-base.vercel.app/images/icon.png",
           splashBackgroundColor: "#0f172a",
         },
       },
