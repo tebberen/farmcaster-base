@@ -12,6 +12,7 @@ import { FavoriteReminder } from "./FavoriteReminder";
 import { THEMES, CHAIN_IDS } from "../config/theme";
 import BaseWallet from "./BaseWallet";
 import { encodeFunctionData, Address } from "viem";
+import { Attribution } from "ox/erc8021";
 import {
   Transaction,
   TransactionButton,
@@ -146,7 +147,8 @@ function PlantButton({
         paymasterService: {
           url: process.env.NEXT_PUBLIC_PAYMASTER_URL || '',
         },
-      }}
+        dataSuffix: Attribution.toDataSuffix({ codes: ["bc_7wvlvpi3"] }),
+      } as any}
       onStatus={handleStatus}
     >
       <TransactionButton
