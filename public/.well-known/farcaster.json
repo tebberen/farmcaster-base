@@ -1,21 +1,29 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOiA4ODg4ODgsICJ0eXBlIjogImN1c3RvZHkiLCAia2V5IjogIjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCJ9",
-    "payload": "eyJkb21haW4iOiAiZmFybWNhc3Rlci1iYXNlLnZlcmNlbC5hcHAifQ",
-    "signature": "MHhhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhMWI"
+    "header": "eyJmaWQiOjE1NzY4MzYsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhGOGVBNjIxNWY2M2RDMjZDZjdmN2RDNDE0RjgyYjY3MzcxNDZGNDU2In0",
+    "payload": "eyJkb21haW4iOiJmYXJtY2FzdGVyLWJhc2UudmVyY2VsLmFwcCJ9",
+    "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkgLahqqoe3k9m3P4z1oyCEVmnAORyG6cls2_r1kEu_ZbZ2ogfE98AyQbjUyj8NOO43EQRhP9vgE1oOuhjVmgtwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl8ZgIay2xclZzG8RWZzuWvO8j9R0fus3XxDee9lRlVy8dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD3eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiUTRPUHQtbFN1TmUxUnJENndWV0JURG1GVS1EZ3JhblBGMnU3SXFCcHBQYyIsIm9yaWdpbiI6Imh0dHBzOi8va2V5cy5jb2luYmFzZS5jb20iLCJjcm9zc09yaWdpbiI6ZmFsc2UsIm90aGVyX2tleXNfY2FuX2JlX2FkZGVkX2hlcmUiOiJkbyBub3QgY29tcGFyZSBjbGllbnREYXRhSlNPTiBhZ2FpbnN0IGEgdGVtcGxhdGUuIFNlZSBodHRwczovL2dvby5nbC95YWJQZXgifQAAAAAAAAAAAA"
   },
-  "frame": {
+  "miniapp": {
     "version": "1",
     "name": "FarmCaster Base",
-    "iconUrl": "https://farmcaster-base.vercel.app/icon-512.png",
-    "homeUrl": "https://farmcaster-base.vercel.app",
-    "imageUrl": "https://farmcaster-base.vercel.app/opengraph-image.png",
-    "buttonTitle": "Play FarmCaster",
-    "splashImageUrl": "https://farmcaster-base.vercel.app/splash.png",
+    "subtitle": "Gasless Farming Game",
+    "description": "Plant seeds, water them, and harvest rewards completely gasless on Base.",
+    "iconUrl": "https://farmcaster-base.vercel.app/images/icon.png",
+    "splashImageUrl": "https://farmcaster-base.vercel.app/images/splash.png",
     "splashBackgroundColor": "#0052ff",
-    "webhookUrl": "https://farmcaster-base.vercel.app/api/webhook"
-  },
-  "triggers": [
-    { "type": "channel", "channelId": "base" }
-  ]
+    "homeUrl": "https://farmcaster-base.vercel.app",
+    "primaryCategory": "games",
+    "tags": [
+      "game",
+      "farming",
+      "base"
+    ],
+    "heroImageUrl": "https://farmcaster-base.vercel.app/images/base-cover.png",
+    "tagline": "Plant, Water, Earn",
+    "ogTitle": "FarmCaster Base",
+    "ogDescription": "Join the farming revolution on Base.",
+    "ogImageUrl": "https://farmcaster-base.vercel.app/images/base-cover.png",
+    "noindex": false
+  }
 }
